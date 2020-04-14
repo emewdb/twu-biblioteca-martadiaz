@@ -23,11 +23,6 @@ public class BookRepository {
                 found = true;
             }
         }
-        if(found)
-            System.out.println("Thank you! Enjoy the book!");
-        else
-            System.out.println("Sorry, that book is not available");
-
         return found;
     }
 
@@ -39,11 +34,6 @@ public class BookRepository {
                 found = true;
             }
         }
-        if(found)
-            System.out.println("Thank you for returning the book!");
-        else
-            System.out.println("That is not a valid book to return");
-
         return found;
     }
 }

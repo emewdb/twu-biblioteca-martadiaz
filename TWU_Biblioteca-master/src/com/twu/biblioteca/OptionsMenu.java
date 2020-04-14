@@ -8,44 +8,64 @@ public class OptionsMenu {
     private Scanner input = new Scanner(System.in);
     private Scanner subinput = new Scanner(System.in);
 
-    //Main menu
-    public String getOptionsMenuSelection(){
-        String selection;
-
-
-        System.out.println("OPTIONS MENU");
-        System.out.println("1 - List of Books");
-        System.out.println("Press 0 for EXIT");
-        selection = input.next();
-
-        return selection;
+    private enum Menu{
+        mainMenu,
+        bookList
     }
 
-    public String goToSelection(String selection){
-        String selected = "";
-        String aux = selection;
-        switch (aux){
-            case "0":
-                selected = "exit";
-                System.exit(0);
+    private Menu currentMenu = Menu.mainMenu;
+
+    public void getMenu(){
+        String option = "";
+
+        while(true){
+            //drawing menu switch
+            switch (currentMenu){
+            case mainMenu:
+                printOptionsMenuSelection();
                 break;
-            case "1":
-                listBooks();
-                selected = "list";
-                String action = bookActionsMenu();
-                if(action.equals("0"))
-                    goToSelection("0");
-                else
-                    bookAction(action);
+            case bookList:
+                printBookActionsMenu();
                 break;
-            default:
-                System.out.println("Please select a valid option!");
-                //break;
+            }
+            option = input.next().toLowerCase();
+            //acting switch
+            switch(option){
+                //exit
+                case "0":
+                    System.exit(0);
+                    //books
+                case "1":
+                    currentMenu = Menu.mainMenu;
+                    break;
+                case "l":
+                    printBooks();
+                    currentMenu = Menu.bookList;
+                    break;
+                case "c":
+                    checkoutBook();
+                    break;
+                case "r":
+                    returnBook();
+                    break;
+                default:
+                    System.out.println("Choose a valid option!");
+                    break;
+            }
+
         }
-        return selected;
     }
 
-    private void listBooks(){
+
+    //Main menu
+    private void printOptionsMenuSelection(){
+        System.out.println("OPTIONS MENU");
+        System.out.println("[l] - list of Books");
+        System.out.println("Press 0 for EXIT");
+    }
+
+    //Book
+    private void printBooks(){
         System.out.printf("%-30s %-30s %-30s\n", "Name:", "Author:", "YearPublished:");
         System.out.printf("%-30s %-30s %-30s\n", "-", "-", "-");
         for(Book book : bookRepository.list){
@@ -53,34 +73,36 @@ public class OptionsMenu {
                 System.out.printf("%-30s %-30s %-30s\n", book.getName(), book.getAuthor(), book.getYearPublished());
         }
     }
-    private String bookActionsMenu(){
-        Scanner input = new Scanner(System.in);
-
+    private void printBookActionsMenu(){
         System.out.println("BOOK ACTIONS");
         System.out.println("[c] - Checkout Book");
         System.out.println("[r] - Return Book");
         System.out.println("Press 0 for EXIT");
-
-        return input.next();
+        System.out.println("Press 1 to go back");
     }
-    private boolean bookAction(String action){
-        boolean result = false;
+    private void checkoutBook(){
+        boolean checkedOut = false;
 
-        while(!result){
-            //Checkout
-            if(action.toLowerCase().equals("c")){
-                System.out.println("Name of the book to checkout");
-                String checkoutName = subinput.nextLine();
-                result = bookRepository.checkoutBook(checkoutName);
-            }
-            //Return
-            else if(action.toLowerCase().equals("r")){
-                System.out.println("Name of the book to return");
-                String returnName = subinput.nextLine();
-                result = bookRepository.returnBook(returnName);
-            }
-        }
-        return  result;
+        System.out.println("Name of the book to checkout");
+        String checkoutName = subinput.nextLine();
+        checkedOut = bookRepository.checkoutBook(checkoutName);
+
+        if(checkedOut)
+            System.out.println("Thank you! Enjoy the book!");
+        else
+            System.out.println("Sorry, that book is not available");
+    }
+    private void returnBook(){
+        boolean returned = false;
+
+        System.out.println("Name of the book to return");
+        String returnName = subinput.nextLine();
+        returned = bookRepository.returnBook(returnName);
+
+        if(returned)
+            System.out.println("Thank you for returning the book!");
+        else
+            System.out.println("That is not a valid book to return");
     }
 
 }

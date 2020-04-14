@@ -8,13 +8,7 @@ public class BibliotecaApp {
     public static void main(String[] args) {
 
         System.out.println(welcome.WelcomeMessage);
-        while(true){
-            String select = menu.getOptionsMenuSelection();
-            System.out.println(select);
-            menu.goToSelection((select));
-        }
-
-
+        menu.getMenu();
     }
 }
 
