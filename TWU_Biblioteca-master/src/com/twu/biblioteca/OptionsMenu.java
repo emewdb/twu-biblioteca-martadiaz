@@ -15,47 +15,51 @@ public class OptionsMenu {
 
     private Menu currentMenu = Menu.mainMenu;
 
-    public void getMenu(){
+    public void showMenu(){
         String option = "";
 
         while(true){
-            //drawing menu switch
-            switch (currentMenu){
+            printMenus(currentMenu);
+            option = input.next().toLowerCase();
+            actOnMenuOption(option);
+        }
+    }
+
+    // switch draw & act menus
+    private void printMenus(Menu selectedMenu){
+        switch (currentMenu){
             case mainMenu:
                 printOptionsMenuSelection();
                 break;
             case bookList:
                 printBookActionsMenu();
                 break;
-            }
-            option = input.next().toLowerCase();
-            //acting switch
-            switch(option){
-                //exit
-                case "0":
-                    System.exit(0);
-                    //books
-                case "1":
-                    currentMenu = Menu.mainMenu;
-                    break;
-                case "l":
-                    printBooks();
-                    currentMenu = Menu.bookList;
-                    break;
-                case "c":
-                    checkoutBook();
-                    break;
-                case "r":
-                    returnBook();
-                    break;
-                default:
-                    System.out.println("Choose a valid option!");
-                    break;
-            }
-
         }
     }
-
+    private void actOnMenuOption(String option){
+        switch(option){
+            //exit
+            case "0":
+                System.exit(0);
+                //books
+            case "1":
+                currentMenu = Menu.mainMenu;
+                break;
+            case "l":
+                printBooks();
+                currentMenu = Menu.bookList;
+                break;
+            case "c":
+                checkoutBook();
+                break;
+            case "r":
+                returnBook();
+                break;
+            default:
+                System.out.println("Choose a valid option!");
+                break;
+        }
+    }
 
     //Main menu
     private void printOptionsMenuSelection(){
