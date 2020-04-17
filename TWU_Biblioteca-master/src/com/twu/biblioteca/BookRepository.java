@@ -15,26 +15,4 @@ public class BookRepository {
 
     public  List<Book> list = Arrays.asList(booksArray);
 
-    public boolean checkoutBook(String name){
-        boolean found = false;
-        for(Book book : booksArray){
-            if(book.getName().toLowerCase().equals(name.toLowerCase()) && !book.getCheckStatus()){
-                book.setCheckStatus(true);
-                found = true;
-            }
-        }
-        return found;
-    }
-
-    public boolean returnBook(String name){
-        boolean found = false;
-        for(Book book : booksArray){
-            if(book.getName().toLowerCase().equals(name.toLowerCase()) && book.getCheckStatus()){
-                book.setCheckStatus(false);
-                found = true;
-            }
-        }
-        return found;
-    }
 }
-

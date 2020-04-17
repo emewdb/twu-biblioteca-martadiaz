@@ -6,12 +6,14 @@ public class Book {
     private String author;
     private String yearPublished;
     private boolean checkedOut;
+    private User user;
 
     public Book(String name, String author, String yearPublished){
         this.name = name;
         this.author = author;
         this.yearPublished = yearPublished;
         this.checkedOut = false; //unchecked by default
+        this.user = null; // unchecked = no user by default
     }
 
     // Getters
@@ -27,9 +29,11 @@ public class Book {
     public boolean getCheckStatus() {
         return checkedOut;
     }
+    public User getUser(){ return  user;}
     // Setters
     public void setCheckStatus(boolean status) {
         this.checkedOut = status;
     }
+    public void setUser(User user){ this.user = user; }
 
 }
