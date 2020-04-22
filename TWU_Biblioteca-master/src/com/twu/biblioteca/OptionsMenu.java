@@ -88,6 +88,7 @@ public class OptionsMenu {
                 //movies
             case "m":
                 printMovies();
+                currentMenu = Menu.videoListMenu;
                 break;
             case "cm":
                 checkoutMovie();
